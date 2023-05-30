@@ -17,3 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test/', function () {
+    return ('my test page');
+});
