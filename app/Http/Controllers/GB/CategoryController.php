@@ -33,9 +33,6 @@ class CategoryController extends Controller
         $categoryAr = $this->getByCode($code);
         $html = "<h1>Рубрика - ". $categoryAr['name'] ." .Новости</h1>";
 
-
-
-
         return $html;
 
     }
