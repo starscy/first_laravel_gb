@@ -12,11 +12,11 @@ final class NewsController extends Controller
     {
         $news = $this->getNews();
 
-        return view('news.index', ['news' => $news]);
+        return view('news/index', ['news' => $news]);
     }
 
     public function show(int $id): View
     {
-        return view('news.show', ['newsItem' => $this->getNews($id)]);
+        return view('news/show', ['newsItem' => $this->getNews($id)]);
     }
 }
