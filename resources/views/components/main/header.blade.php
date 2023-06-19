@@ -7,13 +7,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('news.index')}}">Динозавры</a>
+                    <a class="nav-link  @if(request()->routeIs('news.index')) active @endif" href="{{route('news.index')}}">Динозавры</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="blog.html">Блог</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="shelter.html">Приют динозавриков</a>
+                    <a class="nav-link @if(request()->routeIs('order.index')) active @endif" href="{{route('order.index')}}">Приют динозавриков</a>
                 </li>
 
                 <li class="nav-item">
