@@ -15,8 +15,8 @@ services:
         volumes:
             - '.:/application'
         environment:
-            - MYSQL_ROOT_PASSWORD=secret
-            - MYSQL_DATABASE=gb_news
+            - MYSQL_ROOT_PASSWORD=0885466
+            - MYSQL_DATABASE=gb_laravel
             - MYSQL_USER=starscy
             - MYSQL_PASSWORD=123456
         ports:
