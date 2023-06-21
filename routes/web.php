@@ -5,6 +5,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
@@ -23,4 +24,11 @@ Route::get('/news', [NewsController::class, 'index'])
 Route::get('/news/{id}', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->name('news.show');
+Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
+
+//
+Route::get('/test/env', function () {
+    dd(env('DB_DATABASE')); // Dump 'db' variable value one by one
+});

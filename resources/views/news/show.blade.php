@@ -3,7 +3,7 @@
 @section('content')
 
     <h1 class="mt-4 mb-3">Динозавр:
-        <small>{{$newsItem['title']}}</small>
+        <small>{{$newsItem->title}}</small>
     </h1>
 
     <ol class="breadcrumb">
@@ -25,8 +25,8 @@
         </div>
 
         <div class="col-md-4">
-            <h3 class="my-3">{{$newsItem['title']}}</h3>
-            <p>{{$newsItem['description']}}.</p>
+            <h3 class="my-3">{{$newsItem->title}}</h3>
+            <p>{{$newsItem->description}}.</p>
             <h3 class="my-3">Особенности динозавра</h3>
             <ul>
                 <li><b>Латинское название</b>: Tyrannosaurus</li>
