@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+
 
 class NewsController extends Controller
 {
@@ -20,9 +22,9 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('admin.news.create');
     }
 
     /**
@@ -30,7 +32,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json($request->only('title', 'author', 'image', 'description', 'status' ));
     }
 
     /**
