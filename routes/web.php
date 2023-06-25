@@ -29,6 +29,8 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 
 //
+
 Route::get('/test/env', function () {
     dd(env('DB_DATABASE')); // Dump 'db' variable value one by one
+
 });
