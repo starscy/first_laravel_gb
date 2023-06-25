@@ -29,6 +29,8 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 
 //
-Route::match(["POST", 'GET', 'PUT'], '/test', function(\Illuminate\Http\Request $request) {
-    return $request->all();
+
+Route::get('/test/env', function () {
+    dd(env('DB_DATABASE')); // Dump 'db' variable value one by one
+
 });
