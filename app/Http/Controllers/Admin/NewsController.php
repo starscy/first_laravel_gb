@@ -32,7 +32,8 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request->only('title', 'author', 'image', 'description', 'status' ));
+
+        return response()->json($request->only('title',  'image', 'description',  ));
     }
 
     /**
