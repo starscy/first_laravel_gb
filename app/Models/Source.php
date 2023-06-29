@@ -8,20 +8,18 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class News extends Model
+class Source extends Model
 {
     use HasFactory;
 
-    protected $table = 'news';
+    protected $table = 'sources';
+
     protected $guarded = [];
 
-    public function source()
+    public function news()
     {
-        return $this->belongsTo(Source::class, 'source_id', 'id');
+        return $this->hasMany(News::class, 'source_id', 'id');
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class, 'category_has_news', 'news_id', 'category_id');
-    }
+
 }

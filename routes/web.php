@@ -21,8 +21,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.' ], static function() {
 
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
-Route::get('/news/{id}', [NewsController::class, 'show'])
-    ->where('id', '\d+')
+Route::get('/news/{news}', [NewsController::class, 'show'])
+    ->where('news', '\d+')
     ->name('news.show');
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');

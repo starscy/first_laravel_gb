@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->foreignId('source_id')->nullable()
+            $table
+                ->foreignId('source_id')
+                ->nullable()
                 ->references('id')
                 ->on('sources')
                 ->cascadeOnDelete();
         });
-
     }
 
     /**
