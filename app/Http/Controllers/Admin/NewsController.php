@@ -66,7 +66,7 @@ class NewsController extends Controller
         unset($data['categories']);
 
         $news = News::create($data);
-        if ($news && $categories) {
+        if ($news ) {
             $news->categories()->attach($categories);
 
             return redirect()->route('admin.news.index')->with('success', 'News created');
