@@ -6,12 +6,19 @@ namespace App\Queries;
 
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+
 
 class CategoryQueryBuilder extends QueryBuilder
 {
     public function getModel(): Builder
     {
         return Category::query();
+    }
+
+    public function getAll(): Collection | Null
+    {
+        return $this->getModel()->get();
     }
 
 }

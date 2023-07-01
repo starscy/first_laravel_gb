@@ -8,24 +8,34 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
+use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
+use App\Queries\QueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 
 class NewsController extends Controller
 {
+    protected QueryBuilder $categoryQueryBuilder ;
+    protected QueryBuilder $newsQueryBuilder;
+
+    public function __construct (
+        CategoryQueryBuilder $categoryQueryBuilder,
+        NewsQueryBuilder $newsQueryBuilder
+    ) {
+        $this->categoryQueryBuilder = $categoryQueryBuilder;
+        $this->newsQueryBuilder = $newsQueryBuilder;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-     $news = News::all();
+        $news = $this->newsQueryBuilder->getAll();
+        $categories = Category::all();
 
-
-
-//        $news = $newsQueryBuilder->getModel()->get();
-        return view('admin.news.index' , ['news' => $news]);
+        return view('admin.news.index' , compact('news', 'categories'));
     }
 
     /**
@@ -56,11 +66,13 @@ class NewsController extends Controller
         unset($data['categories']);
 
         $news = News::create($data);
+        if ($news && $categories) {
+            $news->categories()->attach($categories);
 
-        $news->categories()->attach($categories);
+            return redirect()->route('admin.news.index')->with('success', 'News created');
+        }
 
-        // $response = response()->json($request->only('title',  'image', 'description',  ));
-        return redirect()->route('admin.news.index');
+        return redirect()->route('admin.news.index')->with('error', 'News has not been created');
 
     }
 
@@ -110,10 +122,28 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(News $news)
+    public function destroy($id)
     {
-        $news->delete();
+        $news=News::find($id);
 
-        return redirect()->route('admin.news.index');
+        if ($news->delete()) {
+            return response()->json([
+                'data' => [
+                    'id' => $id
+                ],
+                'status' => 'success',
+            ]);
+        } else
+        {
+            return response()->json([
+                'data' => [
+                    'id' => $id
+                ],
+                'status' => 'error',
+                'message' => __("Couldn't Delete. Please Try Again!")
+            ]);
+        }
+
+       // return redirect()->route('admin.news.index');
     }
 }

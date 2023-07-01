@@ -17,6 +17,8 @@ Route::group(['prefix' => 'admin','as' => 'admin.' ], static function() {
     Route::resource('/news', AdminNewsController::class);
 });
 
+Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
+
 // Guest's routes
 
 Route::get('/news', [NewsController::class, 'index'])
