@@ -23,10 +23,10 @@
         @foreach ($news as $newsItem)
             <div class="col-lg-6 portfolio-item">
                 <div class="card h-100">
-                    <a href="{{route('news.show', ['id' => $newsItem->id])}}"><img class="card-img-top" src="images/dinosaurs/tirannozavr.jpg" alt="Тираннозавр"></a>
+                    <a href="{{route('news.show', $newsItem->id)}}"><img class="card-img-top" src="images/dinosaurs/tirannozavr.jpg" alt="Тираннозавр"></a>
                     <div class="card-body">
                         <h4 class="card-title">
-                            <a href="{{route('news.show', ['id' => $newsItem->id])}}">{{$newsItem->title}}</a>
+                            <a href="{{route('news.show',  $newsItem->id)}}">{{$newsItem->title}}</a>
                         </h4>
                         <p class="card-text">{{$newsItem->description}}</p>
                     </div>

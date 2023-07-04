@@ -14,12 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table
-                ->foreignId('source_id')
-                ->nullable()
-                ->references('id')
-                ->on('sources')
-                ->cascadeOnDelete();
+            $table->boolean('active')->default(true);
         });
     }
 
@@ -31,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->dropColumn('source_id');
+            $table->dropColumn('active');
         });
     }
 };

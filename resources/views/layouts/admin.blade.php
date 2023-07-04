@@ -8,6 +8,14 @@
 
     <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
 
+    <!-- CSRF Token -->
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
     <!-- Favicons -->
     <meta name="theme-color" content="#712cf9">
 
