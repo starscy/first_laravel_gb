@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\StoreNewsRequest;
+use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Source;
@@ -12,8 +14,7 @@ use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\QueryBuilder;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-
+use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
@@ -52,27 +53,18 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreNewsRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'title' => 'string',
-            'description' => '',
-            'image'=>'',
-            'source_id' =>'',
-            'categories' => '',
-        ]);
-
-        $categories = $data['categories'];
-        unset($data['categories']);
+        $data = $request->validated();
 
         $news = News::create($data);
-        if ($news ) {
-            $news->categories()->attach($categories);
+        if ($news) {
+            $news->categories()->attach($request->getCategories());
 
-            return redirect()->route('admin.news.index')->with('success', 'News created');
+            return redirect()->route('admin.news.index')->with('success', trans('News has been created'));
         }
 
-        return redirect()->route('admin.news.index')->with('error', 'News has not been created');
+        return redirect()->route('admin.news.index')->with('error', trans('News has not been created'));
 
     }
 
@@ -92,30 +84,18 @@ class NewsController extends Controller
         $sources = Source::all();
         $categories = Category::all();
 
-
         return \view('admin.news.edit', compact('news', 'sources', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news)
     {
-        $data = $request->validate([
-            'title' => 'string',
-            'description' => '',
-            'image'=>'',
-            'source_id' =>'',
-            'categories' => '',
-        ]);
+        $news->update($request->validated());
 
-        $categories = $data['categories'];
-        unset($data['categories']);
+        $news->categories()->sync($request->getCategories());
 
-        $news->update($data);
-
-        $news->categories()->sync($categories);
-        // $response = response()->json($request->only('title',  'image', 'description',  ));
         return redirect()->route('admin.news.index');
     }
 
