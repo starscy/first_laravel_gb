@@ -44,32 +44,64 @@
     </div>
     {{$news->links()}}
 
+    {{--    <script>--}}
+    {{--        $(".deleteBtn").click(function () {--}}
+    {{--            let id = $(this).data("id");--}}
+    {{--            let token = $("meta[name='csrf-token']").attr("content");--}}
+    {{--            $("#"+id+"block").remove();--}}
+    {{--            $.ajax(--}}
+    {{--                {--}}
+    {{--                    headers: {--}}
+    {{--                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+    {{--                    },--}}
+    {{--                    url: "/news/" + id,--}}
+    {{--                    type: "POST",--}}
+    {{--                    data: {--}}
+    {{--                        "id": id,--}}
+    {{--                        "_token": token,--}}
+    {{--                        _method: "DELETE"--}}
+    {{--                    },--}}
+    {{--                    success: function (result) {--}}
+    {{--                        $(id+'block').remove();--}}
+    {{--                        console.log("success delete " + id + " news", result);--}}
+    {{--                    },--}}
+    {{--                    error: function (result) {--}}
+    {{--                        console.log('error', result);--}}
+    {{--                    }--}}
+    {{--                });--}}
+    {{--        });--}}
+    {{--    </script>--}}
+
     <script>
-        $(".deleteBtn").click(function () {
-            let id = $(this).data("id");
-            let token = $("meta[name='csrf-token']").attr("content");
-            $("#"+id+"block").remove();
-            $.ajax(
-                {
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "/news/" + id,
-                    type: "POST",
-                    data: {
-                        "id": id,
-                        "_token": token,
-                        _method: "DELETE"
-                    },
-                    success: function (result) {
-                        $(id+'block').remove();
-                        console.log("success delete " + id + " news", result);
-                    },
-                    error: function (result) {
-                        console.log('error', result);
-                    }
-                });
-        });
+        let buttons = document.querySelectorAll(".deleteBtn");
+        buttons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                let id = btn.getAttribute('data-id');
+                if (confirm('Вы подтвеждаете удаление?')) {
+                    sendToDelete('/admin/news/' + id)
+                        .then(() => {
+                            location.reload();
+                        })
+
+                } else {
+                    console.log('delete canceled');
+                }
+            })
+        })
+
+        async function sendToDelete(url) {
+            console.log(url)
+            let token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                }
+            });
+            const answer = await response.json();
+
+            return answer;
+        }
     </script>
 
     </body>
