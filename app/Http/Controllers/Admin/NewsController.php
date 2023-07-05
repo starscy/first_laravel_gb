@@ -124,6 +124,5 @@ class NewsController extends Controller
             ]);
         }
 
-       // return redirect()->route('admin.news.index');
     }
 }

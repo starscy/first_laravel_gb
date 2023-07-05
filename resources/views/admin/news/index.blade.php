@@ -90,7 +90,6 @@
         })
 
         async function sendToDelete(url) {
-            console.log(url)
             let token = document.querySelector("meta[name='csrf-token']").getAttribute("content");
             let response = await fetch(url, {
                 method: 'DELETE',
@@ -103,7 +102,6 @@
             return answer;
         }
     </script>
-
     </body>
 
 @endsection
