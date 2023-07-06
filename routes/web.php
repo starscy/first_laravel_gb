@@ -6,6 +6,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Requests\News\FilterRequest;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
@@ -15,9 +16,10 @@ Route::group(['prefix' => 'admin','as' => 'admin.' ], static function() {
     Route::get('/', AdminController::class)->name('index');
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/news', AdminNewsController::class);
+
 });
 
-Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
+//Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
 
 // Guest's routes
 

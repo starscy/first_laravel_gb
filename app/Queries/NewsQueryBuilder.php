@@ -26,4 +26,16 @@ class NewsQueryBuilder extends QueryBuilder
         return $this->getModel()->active()->get();
     }
 
+    public function getTitleFilter($title)
+    {
+        return $this->getModel()->where('title', 'like', "%${title}%");
+    }
+
+    public function getSourceFilter($id)
+    {
+        return $this->getModel()->where('source_id', '=', $id)->get();
+    }
+
+
+
 }

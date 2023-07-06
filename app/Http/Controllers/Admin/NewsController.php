@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\NewsFilter;
+use App\Http\Requests\News\FilterRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\Category;
@@ -13,30 +16,54 @@ use App\Models\Source;
 use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\QueryBuilder;
+use App\Queries\SourceQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
-    protected QueryBuilder $categoryQueryBuilder ;
+    protected QueryBuilder $categoryQueryBuilder;
     protected QueryBuilder $newsQueryBuilder;
+    protected SourceQueryBuilder $sourceQueryBuilder;
 
-    public function __construct (
+    public function __construct(
         CategoryQueryBuilder $categoryQueryBuilder,
-        NewsQueryBuilder $newsQueryBuilder
-    ) {
+        NewsQueryBuilder     $newsQueryBuilder,
+        SourceQueryBuilder   $sourceQueryBuilder
+    )
+    {
         $this->categoryQueryBuilder = $categoryQueryBuilder;
         $this->newsQueryBuilder = $newsQueryBuilder;
+        $this->sourceQueryBuilder = $sourceQueryBuilder;
     }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterRequest $request)
     {
-        $news = $this->newsQueryBuilder->getAll();
-        $categories = Category::all();
+        $data = $request->validated();
 
-        return view('admin.news.index' , compact('news', 'categories'));
+        $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
+
+        $news = News::filter($filter);
+
+        dd($news->get());
+
+        $query = News::query();
+
+        if (!empty($data['title'])) {
+            $query->where('title', 'like', "%{$data['title']}%");
+        }
+        if (!empty($data['source_id'])) {
+            $query->where('source_id', '=', $data['source_id']);
+        }
+
+        $news = $query->paginate(20);
+
+        $categories = $this->categoryQueryBuilder->getAll();
+
+        return view('admin.news.index', compact('news', 'categories'));
     }
 
     /**
@@ -44,8 +71,8 @@ class NewsController extends Controller
      */
     public function create(): View
     {
-        $sources = Source::all();
-        $categories = Category::all();
+        $sources = $this->sourceQueryBuilder->getAll();
+        $categories = $this->categoryQueryBuilder->getAll();
 
         return view('admin.news.create', compact('sources', 'categories'));
     }
@@ -71,9 +98,9 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(News $news): View
     {
-        return $id;
+        return view('admin.news.show', ['newsItem' => $news]);
     }
 
     /**
@@ -81,8 +108,8 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $sources = Source::all();
-        $categories = Category::all();
+        $sources = $this->sourceQueryBuilder->getAll();
+        $categories = $this->categoryQueryBuilder->getAll();
 
         return \view('admin.news.edit', compact('news', 'sources', 'categories'));
     }
@@ -92,6 +119,7 @@ class NewsController extends Controller
      */
     public function update(UpdateNewsRequest $request, News $news)
     {
+        dd($request->validated());
         $news->update($request->validated());
 
         $news->categories()->sync($request->getCategories());
@@ -104,7 +132,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        $news=News::find($id);
+        $news = News::find($id);
 
         if ($news->delete()) {
             return response()->json([
@@ -113,8 +141,7 @@ class NewsController extends Controller
                 ],
                 'status' => 'success',
             ]);
-        } else
-        {
+        } else {
             return response()->json([
                 'data' => [
                     'id' => $id

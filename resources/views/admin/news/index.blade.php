@@ -20,7 +20,7 @@
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 <h2 class="card-text">ID: {{$arItem['id']}}</h2>
-                                <h2 class="card-text">{{$arItem['title']}}</h2>
+                                <a href="{{route('admin.news.show', $arItem['id'])}}"><h2 class="card-text">{{$arItem['title']}}</h2></a>
                                 <p class="card-text">{{$arItem['description']}}</p>
                                 <p class="card-text">{{$arItem['source_id']}}</p>
                                 @foreach($arItem->categories as $category)
@@ -42,8 +42,9 @@
             </div>
         </div>
     </div>
-    {{$news->links()}}
-
+    @if(method_exists($news, 'links'))
+        {{$news->links()}}
+    @endif
     {{--    <script>--}}
     {{--        $(".deleteBtn").click(function () {--}}
     {{--            let id = $(this).data("id");--}}
