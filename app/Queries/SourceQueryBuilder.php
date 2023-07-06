@@ -6,6 +6,7 @@ namespace App\Queries;
 
 use App\Models\Source;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class SourceQueryBuilder extends QueryBuilder
 {
@@ -14,4 +15,8 @@ class SourceQueryBuilder extends QueryBuilder
         return Source::query();
     }
 
+    public function getAll():Collection
+    {
+        return $this->getModel()->get();
+    }
 }

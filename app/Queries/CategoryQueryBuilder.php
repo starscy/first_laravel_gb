@@ -16,7 +16,7 @@ class CategoryQueryBuilder extends QueryBuilder
         return Category::query();
     }
 
-    public function getAll(): Collection | Null
+    public function getAll()
     {
         return $this->getModel()->get();
     }
