@@ -48,19 +48,6 @@ class NewsController extends Controller
 
         $news = News::filter($filter);
 
-        dd($news->get());
-
-        $query = News::query();
-
-        if (!empty($data['title'])) {
-            $query->where('title', 'like', "%{$data['title']}%");
-        }
-        if (!empty($data['source_id'])) {
-            $query->where('source_id', '=', $data['source_id']);
-        }
-
-        $news = $query->paginate(20);
-
         $categories = $this->categoryQueryBuilder->getAll();
 
         return view('admin.news.index', compact('news', 'categories'));
