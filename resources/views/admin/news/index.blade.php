@@ -16,6 +16,7 @@
             @include('admin.messages')
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach($news as $arItem)
+
                     <div class="col" id="{{$arItem['id']}}block">
                         <div class="card shadow-sm">
                             <div class="card-body">

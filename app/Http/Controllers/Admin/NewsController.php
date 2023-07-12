@@ -42,11 +42,14 @@ class NewsController extends Controller
      */
     public function index(FilterRequest $request)
     {
+        session()->put('mySes');
+        $test = $request->session()->get('mySes');
+        dd($test);
         $data = $request->validated();
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
 
-        $news = News::filter($filter);
+        $news = News::filter($filter)->get();
 
         $categories = $this->categoryQueryBuilder->getAll();
 
@@ -106,7 +109,7 @@ class NewsController extends Controller
      */
     public function update(UpdateNewsRequest $request, News $news)
     {
-        dd($request->validated());
+
         $news->update($request->validated());
 
         $news->categories()->sync($request->getCategories());
