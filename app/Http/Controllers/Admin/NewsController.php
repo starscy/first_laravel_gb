@@ -42,9 +42,7 @@ class NewsController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        session()->put('mySes');
-        $test = $request->session()->get('mySes');
-        dd($test);
+
         $data = $request->validated();
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
@@ -80,9 +78,7 @@ class NewsController extends Controller
 
             return redirect()->route('admin.news.index')->with('success', trans('News has been created'));
         }
-
         return redirect()->route('admin.news.index')->with('error', trans('News has not been created'));
-
     }
 
     /**

@@ -11,18 +11,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
 
-// Admin
-Route::group(['prefix' => 'admin','as' => 'admin.' ], static function() {
-    Route::get('/', AdminController::class)->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
+Route::group(['middleware' => ['auth', 'admin.panel'] ], static function () {
+
+    // Admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
+        Route::get('/', AdminController::class)->name('index');
+        Route::resource('/categories', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+
+    });
 
 });
+
 
 //Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
 
 // Guest's routes
-
+Route::get('/', [IndexController::class, 'index'])
+    ->name('index');
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
 Route::get('/news/{news}', [NewsController::class, 'show'])

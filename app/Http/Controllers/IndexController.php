@@ -14,10 +14,6 @@ final class IndexController extends Controller
         return view('index');
     }
 
-    public function __invoke(Request $request):View
-    {
-        dd($request->all());
-        return \view('admin.news');
-    }
+
 }
 

@@ -2,5 +2,15 @@
     "News has been created" : "Новость была создана",
     "News has not been created" : "Новость не была создана",
     "News has been updated" : "Новость была обновлена",
-    "News has not been updated" : "Новость не была обновлена"
+    "News has not been updated" : "Новость не была обновлена",
+
+    "Register" : "Зарегистрироваться",
+    "Auth" : "Авторизоваться",
+    "Exit" : "Выйти",
+    "Admin" : "Админка",
+    "Enter" : "Войти",
+
+    "News" : "Динозавры",
+    "Order" : "Приют динозавриков",
+    "Account" : "Личный кабинет"
 }
