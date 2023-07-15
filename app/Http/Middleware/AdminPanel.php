@@ -19,11 +19,12 @@ class AdminPanel
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->admin) {
+        if (Auth::user()) {
+            if (!Auth::user()->admin) {
 
-         return redirect()->route('index');
-        };
-
-        return $next($request);
+                return redirect()->route('index');
+            };
+            return $next($request);
+        }
     }
 }

@@ -31,15 +31,15 @@
                              class="rounded-circle bg-white avatar-img" alt="Аватар">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        @if(Auth::user())
+                        @if(Auth::user() && Auth::user()->admin)
                         <a class="dropdown-item" href="{{route('admin.index')}}">{{__('Admin')}}</a>
                         @endif
-                        <a class="dropdown-item" href="#">{{__('Account')}}</a>
+                        <a class="dropdown-item" href="{{route('account.index')}}">{{__('Account')}}</a>
                         <div class="dropdown-divider"></div>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button class="dropdown-item" type="submit">
-                                {{__('exit')}}
+                                {{__('Exit')}}
                             </button>
                         </form>
                     </div>
