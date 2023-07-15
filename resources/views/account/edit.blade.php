@@ -8,9 +8,9 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form method="post" action="{{route('account.update', $user)}}">
+        <form method="post" action="{{route('user-profile-information.update')}}">
             @csrf
-            @method('patch')
+            @method('PUT')
             <div class="card-body">
                 <div class="form-group">
                     <label for="exampleInputName1">Имя профиля</label>
@@ -22,16 +22,16 @@
                     <input name="email" type="email" value="{{$user->email}}" class="form-control"
                            id="exampleInputEmail1" placeholder="Enter email">
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Текущий пароль</label>
-                    <input name="current_password" type="password" value="{{$user->password}}" class="form-control"
-                           id="current_password" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Новый пароль</label>
-                    <input name="password" type="password" value="{{$user->password}}" class="form-control"
-                           id="password" placeholder="Password">
-                </div>
+{{--                <div class="form-group">--}}
+{{--                    <label for="exampleInputPassword1">Текущий пароль</label>--}}
+{{--                    <input name="current_password" type="password" value="{{$user->password}}" class="form-control"--}}
+{{--                           id="current_password" placeholder="Password">--}}
+{{--                </div>--}}
+{{--                <div class="form-group">--}}
+{{--                    <label for="exampleInputPassword1">Новый пароль</label>--}}
+{{--                    <input name="password" type="password" value="{{$user->password}}" class="form-control"--}}
+{{--                           id="password" placeholder="Password">--}}
+{{--                </div>--}}
             </div>
             <!-- /.card-body -->
 
