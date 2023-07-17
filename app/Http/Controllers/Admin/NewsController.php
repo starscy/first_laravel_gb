@@ -27,6 +27,8 @@ class NewsController extends Controller
     protected NewsQueryBuilder $newsQueryBuilder;
     protected SourceQueryBuilder $sourceQueryBuilder;
 
+    protected NewsService $service;
+
     public function __construct(
         CategoryQueryBuilder $categoryQueryBuilder,
         NewsQueryBuilder     $newsQueryBuilder,
@@ -52,7 +54,7 @@ class NewsController extends Controller
 
         $news = News::filter($filter)->get();
 
-        return view('admin.news.index', compact('news'));
+        return view('admin.news.index', compact('news', ));
     }
 
     /**
