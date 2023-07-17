@@ -1,26 +1,40 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Requests\News\FilterRequest;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', [IndexController::class, 'index']);
 
-// Admin
-Route::group(['prefix' => 'admin','as' => 'admin.' ], static function() {
-    Route::get('/', AdminController::class)->name('index');
-    Route::resource('/categories', AdminCategoryController::class);
-    Route::resource('/news', AdminNewsController::class);
+Route::group(['middleware' => ['admin.panel', 'auth']], static function () {
+
+    // Admin
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
+        Route::get('/', AdminController::class)->name('index');
+        Route::resource('/categories', AdminCategoryController::class);
+        Route::resource('/news', AdminNewsController::class);
+        Route::resource('/users', AdminUsersController::class);
+
+    });
 });
 
-Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
+Route::group(['middleware' => 'auth'], static function () {
+    Route::resource('/account', \App\Http\Controllers\AccountController::class);
+    });
+
+
+//Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
 
 // Guest's routes
-
+Route::get('/', [IndexController::class, 'index'])
+    ->name('index');
 Route::get('/news', [NewsController::class, 'index'])
     ->name('news.index');
 Route::get('/news/{news}', [NewsController::class, 'show'])

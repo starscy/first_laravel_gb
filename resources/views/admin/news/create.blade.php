@@ -12,6 +12,9 @@
                     <input type="text" class="form-control" id="title" name="title" placeholder="Заголовок  ">
                     <p class="help-block"></p>
                 </div>
+                @error('title')
+                <p class="text-danger">{{ $message }} </p>
+                @enderror
             </div>
             <div class="control-group form-group">
                 <div class="controls">
@@ -21,8 +24,10 @@
             </div>
             <div class="control-group form-group">
                 <div class="controls">
-                    <label for="message">Описание</label>
-                    <textarea rows="10" cols="100" class="form-control" id="description" name="description" required style="resize:none" placeholder="Введите какого обжорозаврика вы хотите и почему..."></textarea>
+                    <label for="description">Описание</label>
+                    <textarea rows="10" cols="100" class="form-control" id="description" name="description" required style="resize:none" placeholder="Введите какого обжорозаврика вы хотите и почему...">
+                        {{old('description')}}
+                    </textarea>
                 </div>
             </div>
             <div class="control-group form-group">
@@ -30,7 +35,9 @@
                     <label for="source">Выберите тип </label>
                     <select class="form-control" id="source" name="source_id">
                         @foreach($sources as $arItem)
-                            <option value="{{$arItem->id}}">{{$arItem->title}}</option>
+                            <option
+                                {{old('source_id') == $arItem->id ? 'selected' : ''}}
+                                value="{{$arItem->id}}">{{$arItem->title}}</option>
                         @endforeach
                     </select>
                 </div>

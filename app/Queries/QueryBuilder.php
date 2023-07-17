@@ -10,4 +10,6 @@ abstract class QueryBuilder
 {
     abstract public function getModel(): Builder;
 
+    abstract public function getAll();
+
 }
