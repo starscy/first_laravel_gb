@@ -15,23 +15,28 @@
         <div class="container">
             @include('admin.messages')
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                @foreach($news as $arItem)
-
-                    <div class="col" id="{{$arItem['id']}}block">
+                @foreach($news as $newsItem)
+                    <div class="col" id="{{$newsItem['id']}}block">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <h2 class="card-text">ID: {{$arItem['id']}}</h2>
-                                <a href="{{route('admin.news.show', $arItem['id'])}}"><h2 class="card-text">{{$arItem['title']}}</h2></a>
-                                <p class="card-text">{{$arItem['description']}}</p>
-                                <p class="card-text">{{$arItem['source_id']}}</p>
-                                @foreach($arItem->categories as $category)
+                                <h2 class="card-text">ID: {{$newsItem['id']}}</h2>
+                                <a href="{{route('admin.news.show', $newsItem['id'])}}"><h2
+                                        class="card-text">{{$newsItem['title']}}</h2></a>
+                                <p class="card-text">{{$newsItem['description']}}</p>
+
+                                @if($newsItem->source->id === $newsItem['source_id'])
+                                    <p class="card-text">Группа : {{$newsItem->source->title}}</p>
+                                @endif
+
+                                @foreach($newsItem->categories as $category)
                                     <p class="card-text">{{$category->title}}</p>
                                 @endforeach
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a href="{{route('admin.news.edit', $arItem->id)}}"
+                                        <a href="{{route('admin.news.edit', $newsItem->id)}}"
                                            class="btn btn-sm btn-outline-secondary">edit</a>
-                                        <button class="btn btn-danger deleteBtn" data-id={{$arItem['id']}} > delete
+                                        <button class="btn btn-danger deleteBtn" data-id={{$newsItem['id']}} > delete
                                         </button>
                                     </div>
                                     <small class="text-body-secondary">9 mins</small>
@@ -46,33 +51,6 @@
     @if(method_exists($news, 'links'))
         {{$news->links()}}
     @endif
-    {{--    <script>--}}
-    {{--        $(".deleteBtn").click(function () {--}}
-    {{--            let id = $(this).data("id");--}}
-    {{--            let token = $("meta[name='csrf-token']").attr("content");--}}
-    {{--            $("#"+id+"block").remove();--}}
-    {{--            $.ajax(--}}
-    {{--                {--}}
-    {{--                    headers: {--}}
-    {{--                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-    {{--                    },--}}
-    {{--                    url: "/news/" + id,--}}
-    {{--                    type: "POST",--}}
-    {{--                    data: {--}}
-    {{--                        "id": id,--}}
-    {{--                        "_token": token,--}}
-    {{--                        _method: "DELETE"--}}
-    {{--                    },--}}
-    {{--                    success: function (result) {--}}
-    {{--                        $(id+'block').remove();--}}
-    {{--                        console.log("success delete " + id + " news", result);--}}
-    {{--                    },--}}
-    {{--                    error: function (result) {--}}
-    {{--                        console.log('error', result);--}}
-    {{--                    }--}}
-    {{--                });--}}
-    {{--        });--}}
-    {{--    </script>--}}
 
     <script>
         let buttons = document.querySelectorAll(".deleteBtn");

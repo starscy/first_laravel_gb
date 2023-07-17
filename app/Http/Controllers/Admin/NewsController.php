@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\NewsFilter;
 use App\Http\Requests\News\FilterRequest;
+use App\Services\NewsService;
 use Illuminate\Http\Request;
 use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\News\UpdateNewsRequest;
@@ -22,19 +23,21 @@ use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
-    protected QueryBuilder $categoryQueryBuilder;
-    protected QueryBuilder $newsQueryBuilder;
+    protected CategoryQueryBuilder $categoryQueryBuilder;
+    protected NewsQueryBuilder $newsQueryBuilder;
     protected SourceQueryBuilder $sourceQueryBuilder;
 
     public function __construct(
         CategoryQueryBuilder $categoryQueryBuilder,
         NewsQueryBuilder     $newsQueryBuilder,
-        SourceQueryBuilder   $sourceQueryBuilder
+        SourceQueryBuilder   $sourceQueryBuilder,
+        NewsService $service
     )
     {
         $this->categoryQueryBuilder = $categoryQueryBuilder;
         $this->newsQueryBuilder = $newsQueryBuilder;
         $this->sourceQueryBuilder = $sourceQueryBuilder;
+        $this->service = $service;
     }
 
     /**
@@ -49,9 +52,7 @@ class NewsController extends Controller
 
         $news = News::filter($filter)->get();
 
-        $categories = $this->categoryQueryBuilder->getAll();
-
-        return view('admin.news.index', compact('news', 'categories'));
+        return view('admin.news.index', compact('news'));
     }
 
     /**
@@ -72,13 +73,9 @@ class NewsController extends Controller
     {
         $data = $request->validated();
 
-        $news = News::create($data);
-        if ($news) {
-            $news->categories()->attach($request->getCategories());
-
-            return redirect()->route('admin.news.index')->with('success', trans('News has been created'));
-        }
-        return redirect()->route('admin.news.index')->with('error', trans('News has not been created'));
+        return $this->service->store($data) ?
+            redirect()->route('admin.news.index')->with('success', trans('News has been created')) :
+            redirect()->route('admin.news.index')->with('error', trans('News has not been created'));
     }
 
     /**
@@ -95,9 +92,14 @@ class NewsController extends Controller
     public function edit(News $news)
     {
         $sources = $this->sourceQueryBuilder->getAll();
+
         $categories = $this->categoryQueryBuilder->getAll();
 
-        return \view('admin.news.edit', compact('news', 'sources', 'categories'));
+        return \view('admin.news.edit', [
+            'news' => $news,
+            'sources' => $sources,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -105,12 +107,12 @@ class NewsController extends Controller
      */
     public function update(UpdateNewsRequest $request, News $news)
     {
+        $data = $request->validated();
 
-        $news->update($request->validated());
+        return $this->service->update($news, $data) ?
+            redirect()->route('admin.news.index')->with('success', trans('News has been updated')) :
+            redirect()->route('admin.news.index')->with('error', trans('News has not been updated'));
 
-        $news->categories()->sync($request->getCategories());
-
-        return redirect()->route('admin.news.index');
     }
 
     /**

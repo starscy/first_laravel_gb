@@ -28,7 +28,7 @@ class StoreNewsRequest extends FormRequest
             'description' => ['nullable', 'string', 'min:2'],
             'image'=> ['sometimes'],
             'source_id' =>'',
-
+            'categories' => ''
         ];
     }
 

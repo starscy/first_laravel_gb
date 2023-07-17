@@ -14,5 +14,9 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    public function news()
+    {
+        return $this->belongsToMany(News::class, 'category_has_news', 'category_id', 'news_id');
+    }
 
 }
