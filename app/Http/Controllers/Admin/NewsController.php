@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
@@ -8,38 +7,25 @@ use App\Http\Controllers\Controller;
 use App\Http\Filters\NewsFilter;
 use App\Http\Requests\News\FilterRequest;
 use App\Services\NewsService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\News\UpdateNewsRequest;
-use App\Models\Category;
 use App\Models\News;
-use App\Models\Source;
 use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
-use App\Queries\QueryBuilder;
 use App\Queries\SourceQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller
 {
-    protected CategoryQueryBuilder $categoryQueryBuilder;
-    protected NewsQueryBuilder $newsQueryBuilder;
-    protected SourceQueryBuilder $sourceQueryBuilder;
-
-    protected NewsService $service;
-
     public function __construct(
-        CategoryQueryBuilder $categoryQueryBuilder,
-        NewsQueryBuilder     $newsQueryBuilder,
-        SourceQueryBuilder   $sourceQueryBuilder,
-        NewsService $service
+        protected CategoryQueryBuilder $categoryQueryBuilder,
+        protected NewsQueryBuilder     $newsQueryBuilder,
+        protected SourceQueryBuilder   $sourceQueryBuilder,
+        protected NewsService          $service
     )
     {
-        $this->categoryQueryBuilder = $categoryQueryBuilder;
-        $this->newsQueryBuilder = $newsQueryBuilder;
-        $this->sourceQueryBuilder = $sourceQueryBuilder;
-        $this->service = $service;
     }
 
     /**
@@ -47,14 +33,13 @@ class NewsController extends Controller
      */
     public function index(FilterRequest $request)
     {
-
         $data = $request->validated();
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
 
         $news = News::filter($filter)->get();
 
-        return view('admin.news.index', compact('news', ));
+        return view('admin.news.index', compact('news',));
     }
 
     /**
@@ -91,13 +76,13 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(News $news)
+    public function edit(News $news): View
     {
         $sources = $this->sourceQueryBuilder->getAll();
 
         $categories = $this->categoryQueryBuilder->getAll();
 
-        return \view('admin.news.edit', [
+        return view('admin.news.edit', [
             'news' => $news,
             'sources' => $sources,
             'categories' => $categories
@@ -107,20 +92,19 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateNewsRequest $request, News $news)
+    public function update(UpdateNewsRequest $request, News $news): RedirectResponse
     {
         $data = $request->validated();
 
         return $this->service->update($news, $data) ?
             redirect()->route('admin.news.index')->with('success', trans('News has been updated')) :
             redirect()->route('admin.news.index')->with('error', trans('News has not been updated'));
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $news = News::find($id);
 

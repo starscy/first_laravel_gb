@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
@@ -10,14 +9,13 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-
     use AuthorizesRequests, ValidatesRequests;
 
     protected function getNews(int $id = null): array
     {
         $news = [];
         if ($id === null) {
-            for ($i=0; $i < 10; $i++) {
+            for ($i = 0; $i < 10; $i++) {
                 $news[] = [
                     'id' => $i,
                     'title' => fake()->jobTitle(),

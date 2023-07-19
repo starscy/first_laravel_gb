@@ -21,7 +21,6 @@
             @if(!empty($users))
                 <ul class="users-list clearfix">
                     @foreach($users as $user)
-
                         <li>
                             <img src="dist/img/user1-128x128.jpg" alt="User Image">
                             <a class="users-list-name" href="{{route('admin.users.show', $user)}}">{{$user->email}}</a>
@@ -33,6 +32,6 @@
                 </ul>
         </div>
     </div>
-                <!-- /.users-list -->
+    <!-- /.users-list -->
 
 @endsection

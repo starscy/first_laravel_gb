@@ -1,5 +1,8 @@
 <?php
+declare(strict_types=1);
 
+use App\Helper\UpdateImagesNews;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\IndexController;
@@ -26,11 +29,9 @@ Route::group(['middleware' => ['admin.panel', 'auth']], static function () {
 });
 
 Route::group(['middleware' => 'auth'], static function () {
-    Route::resource('/account', \App\Http\Controllers\AccountController::class);
+    Route::resource('/account', AccountController::class);
     });
 
-
-//Route::delete('/news/{id}', [AdminNewsController::class, 'destroy']);
 
 // Guest's routes
 Route::get('/', [IndexController::class, 'index'])
@@ -46,7 +47,4 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 //
 
-Route::get('/test/env', function () {
-    dd(env('DB_DATABASE')); // Dump 'db' variable value one by one
-
-});
+Route::get('/updateImagesNews',[UpdateImagesNews::class, 'index'] );

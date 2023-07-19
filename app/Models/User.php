@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,8 +48,8 @@ class User extends Authenticatable
 
     ////Scopes
 
-    public function scopeAdmin(Builder $query):void
+    public function scopeAdmin(Builder $query):Collection
     {
-        $query->where('admin',1);
+       return $query->where('admin',1)->get();
     }
 }

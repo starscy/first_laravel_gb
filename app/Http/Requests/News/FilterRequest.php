@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests\News;
 
@@ -11,7 +12,7 @@ class FilterRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,13 +22,13 @@ class FilterRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'title' => ['string', 'min:2', 'max:200'] ,
+            'title' => ['string', 'min:2', 'max:200'],
             'description' => ['nullable', 'string', 'min:2'],
-            'image'=> ['sometimes'],
-            'source_id' =>'',
+            'image' => ['sometimes'],
+            'source_id' => '',
         ];
     }
 

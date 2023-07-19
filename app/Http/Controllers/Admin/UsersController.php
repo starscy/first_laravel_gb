@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Fortify\UpdateUserPassword;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Queries\UserQueryBuilder;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 
 class UsersController extends Controller
 {
-       public function __construct(
-           protected UserQueryBuilder $userQueryBuilder
+    public function __construct(
+        protected UserQueryBuilder $userQueryBuilder
     )
     {
     }
@@ -22,11 +21,9 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-
-        $user = new User();
-        $users = $user->get();
+        $users = $this->userQueryBuilder->getAll();
 
         return view('admin.users.index', compact('users'));
     }
@@ -56,26 +53,25 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
-        return \view('admin.users.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): View
     {
-
         $user->update($request->validated());
 
-        return redirect()->route('admin.users.show', $user);
+        return view('admin.users.show', compact('user'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $user = User::find($id);
 
@@ -95,6 +91,5 @@ class UsersController extends Controller
                 'message' => __("Couldn't Delete. Please Try Again!")
             ]);
         }
-
     }
 }

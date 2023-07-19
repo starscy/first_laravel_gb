@@ -5,7 +5,8 @@ namespace App\Helper;
 
 class TranslateToSlug
 {
-    static public function translit($string) {
+    static public function translit($string):string
+    {
         $converter = array(
             'а' => 'a',   'б' => 'b',   'в' => 'v',
             'г' => 'g',   'д' => 'd',   'е' => 'e',

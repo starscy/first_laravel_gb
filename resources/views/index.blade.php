@@ -6,13 +6,12 @@
 
         <h1 class="my-4">О динозаврах</h1>
 
-
         <div class="row">
             @foreach($news as $arItem)
                 <div class="col-lg-4 col-sm-6 portfolio-item">
                     <div class="card h-100">
                         <a href="{{route('news.show', $arItem)}}"><img class="card-img-top"
-                                                                       src="{{$arItem->image}}"
+                                                                       src="{{asset($arItem->image)}}"
                                                                        alt="{{$arItem->title}}"></a>
                         <div class="card-body">
                             <h4 class="card-title">
@@ -24,16 +23,12 @@
                 </div>
             @endforeach
         </div>
-
-
         <div class="row mb-4 justify-content-center">
             <div class="col-md-4">
                 <a class="btn btn-lg btn-outline-primary btn-block" href="{{route('news.index')}}">Все динозавры</a>
             </div>
         </div>
-
         <hr>
-
         <div class="row">
             <div class="col-lg-6">
                 <h2>Обжорозаврик <i class="fas fa-dragon"></i> - это круто</h2>
@@ -54,12 +49,8 @@
                 <img class="img full-width" src="images/zavri.jpg" alt="Обжорозаврик" width="300" height="300">
             </div>
         </div>
-
-
         <hr>
-
         <h2>Последнее в блоге</h2>
-
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card h-100">

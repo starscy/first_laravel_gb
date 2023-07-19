@@ -20,7 +20,7 @@ class NewsSeeder extends Seeder
     public function getData()
     {
         $data = [];
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $data[] = [
                 'title' => fake()->title(),
                 'author' => fake()->name(),

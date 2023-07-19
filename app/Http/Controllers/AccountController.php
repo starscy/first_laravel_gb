@@ -1,25 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Actions\Fortify\UpdateUserPassword;
-use App\Http\Controllers\Controller;
-use App\Http\Filters\NewsFilter;
-use App\Http\Requests\News\FilterRequest;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Requests\News\StoreNewsRequest;
-use App\Http\Requests\News\UpdateNewsRequest;
-use App\Models\Category;
-use App\Models\News;
-use App\Models\Source;
-use App\Queries\CategoryQueryBuilder;
-use App\Queries\NewsQueryBuilder;
-use App\Queries\QueryBuilder;
-use App\Queries\SourceQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -30,9 +16,10 @@ class AccountController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
         $user = User::find(Auth::user()->id);
+
         return view('account.index', compact('user'));
     }
 
@@ -53,28 +40,26 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(): RedirectResponse
+    public function show(User $user): RedirectResponse
     {
-
         return redirect()->route('account.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         $user = User::find(Auth::user()->id);
+
         return view('account.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-
-
         $user = User::find(Auth::user()->id);
 
         $user->update($request->validated());

@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests\News;
 
+use App\Models\Source;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateNewsRequest extends FormRequest
@@ -11,7 +13,7 @@ class UpdateNewsRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,18 +23,19 @@ class UpdateNewsRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'min:2', 'max:200'] ,
+            'title' => ['required', 'string', 'min:2', 'max:200'],
             'description' => ['nullable', 'string', 'min:2'],
-            'image'=> ['sometimes'],
-            'source_id' =>'',
-            'categories' => '',
+            'image' => ['sometimes'],
+            'source_id' => 'exists:sources,id',
+            'categories' => 'array',
+            'categories.*' => 'exists:categories,id'
         ];
     }
 
-    public function getCategories():array | null
+    public function getCategories(): array|null
     {
         return $this->validated('categories');
     }

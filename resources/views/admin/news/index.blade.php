@@ -15,36 +15,36 @@
         <div class="container">
             @include('admin.messages')
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                @foreach($news as $newsItem)
-                    <div class="col" id="{{$newsItem['id']}}block">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h2 class="card-text">ID: {{$newsItem['id']}}</h2>
-                                <a href="{{route('admin.news.show', $newsItem['id'])}}"><h2
-                                        class="card-text">{{$newsItem['title']}}</h2></a>
-                                <p class="card-text">{{$newsItem['description']}}</p>
-
-                                @if($newsItem->source->id === $newsItem['source_id'])
-                                    <p class="card-text">Группа : {{$newsItem->source->title}}</p>
-                                @endif
-
-                                @foreach($newsItem->categories as $category)
-                                    <p class="card-text">{{$category->title}}</p>
-                                @endforeach
-
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a href="{{route('admin.news.edit', $newsItem->id)}}"
-                                           class="btn btn-sm btn-outline-secondary">edit</a>
-                                        <button class="btn btn-danger deleteBtn" data-id={{$newsItem['id']}} > delete
-                                        </button>
+                @if(!empty($news))
+                    @foreach($news as $newsItem)
+                        <div class="col" id="{{$newsItem['id']}}block">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h2 class="card-text">ID: {{$newsItem['id']}}</h2>
+                                    <a href="{{route('admin.news.show', $newsItem['id'])}}"><h2
+                                            class="card-text">{{$newsItem['title']}}</h2></a>
+                                    <p class="card-text">{{$newsItem['description']}}</p>
+                                    @if($newsItem->source && $newsItem->source->id === $newsItem['source_id'])
+                                        <p class="card-text">Группа : {{$newsItem->source->title}}</p>
+                                    @endif
+                                    @foreach($newsItem->categories as $category)
+                                        <p class="card-text">{{$category->title}}</p>
+                                    @endforeach
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="{{route('admin.news.edit', $newsItem['id'])}}"
+                                               class="btn btn-sm btn-outline-secondary">edit</a>
+                                            <button class="btn btn-danger deleteBtn" data-id={{$newsItem['id']}} >
+                                                delete
+                                            </button>
+                                        </div>
+                                        <small class="text-body-secondary">9 mins</small>
                                     </div>
-                                    <small class="text-body-secondary">9 mins</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>

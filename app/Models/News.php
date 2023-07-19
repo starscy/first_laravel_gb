@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -7,8 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 class  News extends Model
 {
@@ -16,23 +19,29 @@ class  News extends Model
     use Filterable;
 
     protected $table = 'news';
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'author',
+        'source_id',
+    ];
 
 
-    public function source()
+    public function source(): BelongsTo
     {
         return $this->belongsTo(Source::class, 'source_id', 'id');
     }
 
-    public function categories()
+    public function categories() :BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'category_has_news', 'news_id', 'category_id');
     }
 
     ////Scopes
 
-    public function scopeActive(Builder $query):void
+    public function scopeActive(Builder $query):LengthAwarePaginator
     {
-        $query->where('active',1);
+        return $query->where('active',1)->paginate(10);
     }
 }
