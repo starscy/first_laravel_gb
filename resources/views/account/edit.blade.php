@@ -13,11 +13,17 @@
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
+                    @error('name')
+                    <code class="red">{{ $message }}</code>
+                    @enderror
                     <label for="exampleInputName1">Имя профиля</label>
                     <input name="name" type="text" value="{{$user->name}}" class="form-control" id="exampleInputName1"
                            placeholder="Enter name">
                 </div>
                 <div class="form-group">
+                    @error('email')
+                    <code class="red">{{ $message }}</code>
+                    @enderror
                     <label for="exampleInputEmail1">Email address</label>
                     <input name="email" type="email" value="{{$user->email}}" class="form-control"
                            id="exampleInputEmail1" placeholder="Enter email">
@@ -33,6 +39,8 @@
 {{--                           id="password" placeholder="Password">--}}
 {{--                </div>--}}
             </div>
+{{--            <a href="{{ route('password.reset') }}">Сменить пароль</a>--}}
+
             <!-- /.card-body -->
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">{{__('Submit')}}</button>

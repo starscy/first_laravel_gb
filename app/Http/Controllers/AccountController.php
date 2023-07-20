@@ -60,9 +60,14 @@ class AccountController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
+
         $user = User::find(Auth::user()->id);
 
+        $test = new UpdateUserProfileInformation();
+
         $user->update($request->validated());
+
+
 
         return redirect()->route('account.index');
     }

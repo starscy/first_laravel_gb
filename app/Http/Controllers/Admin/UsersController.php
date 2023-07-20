@@ -3,12 +3,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Fortify\CreateNewUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\User;
 use App\Queries\UserQueryBuilder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Password;
 
 class UsersController extends Controller
 {
@@ -38,8 +41,15 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request): void
+    public function store(UpdateUserRequest $request): RedirectResponse
     {
+        $newUser = new CreateNewUser();
+        $user = $newUser->create($request->only(['name', 'email', 'password', 'password_confirm']));
+        $user->roles()->sync($request->roles);
+        Password::sendResetLink($request->only(['email']));
+        $request->session()->flash('succes', 'You created a new user');
+
+        return redirect()->route('admin.user.index');
     }
 
     /**

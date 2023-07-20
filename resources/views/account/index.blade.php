@@ -6,7 +6,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3">
-
+                    @if (session('status'))
+                        <div class="mb-4 font-medium text-sm text-green-600">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">

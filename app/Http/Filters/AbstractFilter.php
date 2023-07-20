@@ -40,7 +40,9 @@ abstract class AbstractFilter implements FilterInterface
     protected function removeQueryParam(string ...$keys): AbstractFilter
     {
         foreach ($keys as $key) {
-            unset($this->queryParams[$key]);
+            if ($this->queryParams[$key]) {
+                unset($this->queryParams[$key]);
+            }
         }
 
         return $this;
