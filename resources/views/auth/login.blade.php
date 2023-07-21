@@ -43,6 +43,7 @@
                     </div>
                     <div class="card-body">
                         <a href="{{route('social-providers.auth', ['driver' => 'vkontakte'])}}">Войти с VK</a>
+                        <a href="{{route('social-providers.auth', ['driver' => 'github'])}}">Войти с GitHub</a>
                     </div>
 
 

@@ -13,6 +13,7 @@
         "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.7",
         "orchestra/parser": "^7.0",
+        "socialiteproviders/github": "^4.1",
         "socialiteproviders/vkontakte": "^5.0"
     },
     "require-dev": {
