@@ -11,6 +11,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SocialProviderController;
 use App\Http\Requests\News\FilterRequest;
 use Illuminate\Support\Facades\Route;
 
@@ -29,10 +30,19 @@ Route::group(['middleware' => ['admin.panel', 'auth', 'verified']], static funct
 
 Route::group(['middleware' => ['auth', 'verified']], static function () {
     Route::resource('/account', AccountController::class);
-    });
+});
 
 
 // Guest's routes
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/{driver}/auth/', [SocialProviderController::class, 'redirect'])
+        ->where('driver', '\w+')
+        ->name('social-providers.auth');
+    Route::get('/{driver}/callback/', [SocialProviderController::class, 'callback'])
+        ->where('driver', '\w+')
+        ->name('social-providers.redirect');
+});
+
 Route::get('/', [IndexController::class, 'index'])
     ->name('index');
 Route::get('/news', [NewsController::class, 'index'])
@@ -46,6 +56,6 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 //different
 
-Route::get('/updateImagesNews',[UpdateImagesNews::class, 'index'] );
+Route::get('/updateImagesNews', [UpdateImagesNews::class, 'index']);
 
-Route::get('/parce/rambler/games',[ParserController::class, '__invoke']);
+Route::get('/parce/rambler/games', [ParserController::class, '__invoke']);

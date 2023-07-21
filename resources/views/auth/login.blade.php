@@ -41,6 +41,10 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">{{__("Enter")}}</button>
                     </div>
+                    <div class="card-body">
+                        <a href="{{route('social-providers.auth', ['driver' => 'vkontakte'])}}">Войти с VK</a>
+                    </div>
+
 
                     <p class="text-center"><a href="{{route('password.request')}}">{{__("Forget password?")}}</a></p>
                     <p class="text-center">{{__("First time?")}}<a href="{{route('register')}}">{{__("Register")}}</a></p>

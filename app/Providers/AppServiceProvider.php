@@ -9,9 +9,11 @@ use App\Queries\QueryBuilder;
 use App\Queries\SourceQueryBuilder;
 use App\Queries\UserQueryBuilder;
 use App\Services\contracts\Parcer;
+use App\Services\contracts\Social;
 use App\Services\contracts\StoreService;
 use App\Services\news\NewsService;
 use App\Services\parcer\ParcerService;
+use App\Services\social\SocialService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,15 +26,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        //Queries
         $this->app->bind(QueryBuilder::class, CategoryQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, NewsQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, SourceQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, UserQueryBuilder::class);
 
         //Services
-
         $this->app->bind(Parcer::class, ParcerService::class );
         $this->app->bind(StoreService::class, NewsService::class);
+        $this->app->bind(Social::class, SocialService::class);
+
+
     }
 
     /**
