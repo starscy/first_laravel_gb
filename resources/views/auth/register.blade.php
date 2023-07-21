@@ -40,7 +40,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                             </div>
-                            <input id="email" name="email" class="form-control" placeholder="Ваш Email" type="email">
+                            <input id="email" name="email" class="form-control" placeholder="Ваш Email" type="email" value="{{old('email') ?? ''}}">
                         </div>
                         @error('email')
                         <code class="red">{{ $message }}</code>
@@ -63,24 +63,20 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-lock"></i></span>
                             </div>
-                            <input id="password-confirm" name="password-confirm" class="form-control" placeholder="Повторите пароль" type="password">
+                            <input id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Повторите пароль" type="password">
                         </div>
-                        @error('password-confirm')
+                        @error('password_confirmation')
                         <code class="red">{{ $message }}</code>
                         @enderror
                     </div>
-
-
 {{--                    <div class="form-group">--}}
 {{--                        <label class="label" for="captchaWordField">Введите слово с картинки</label>--}}
 {{--                        <div class="mb-2"><img src="https://via.placeholder.com/180x40?text=CaPtCHa" alt=""></div>--}}
 {{--                        <input name="" class="form-control" type="text" id="captchaWordField" placeholder="...">--}}
 {{--                    </div>--}}
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">{{ __('Register') }}</button>
                     </div>
-
                     <p class="text-center">{{__("Are you registered ?")}}<a href="{{route('login')}}">{{__('Auth')}}</a></p>
                 </form>
             </div>

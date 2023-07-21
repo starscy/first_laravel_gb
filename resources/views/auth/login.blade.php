@@ -17,7 +17,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-fingerprint"></i> </span>
                             </div>
-                            <input id="email" type="email" name="email" class="form-control" placeholder="email" type="text">
+                            <input id="email" type="email" name="email" class="form-control" placeholder="email">
                         </div>
                         @error('email')
                         <code class="red">{{ $message }}</code>

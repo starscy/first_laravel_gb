@@ -13,7 +13,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-fingerprint"></i> </span>
                             </div>
-                            <input id="email" type="email" name="email" value="{{ old('email', $request->email)}}"
+                            <input id="email" type="email" name="email" value="{{$request->email)}}"
                                    class="form-control" placeholder="email">
                         </div>
                         @error('email')
@@ -44,7 +44,6 @@
                         <code class="red">{{ $message }}</code>
                         @enderror
                     </div>
-
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">{{__("Create")}}</button>
                     </div>

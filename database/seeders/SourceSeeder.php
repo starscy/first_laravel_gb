@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class SourceSeeder extends Seeder
 {
@@ -14,21 +16,16 @@ class SourceSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('news')->insert($this->getData());
-    }
+        DB::table('sources')->insert([
+            'title' => 'Хищник'
+        ]);
 
-    public function getData()
-    {
-        $data = [];
-        for ($i = 0; $i < 1; $i++) {
-            $data[] = [
-                'title' => fake()->title(),
-                'description' => fake()->text(200),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
+        DB::table('sources')->insert([
+            'title' => 'Травоядный'
+        ]);
 
-        return $data;
+        DB::table('sources')->insert([
+            'title' => 'Всеядный'
+        ]);
     }
 }

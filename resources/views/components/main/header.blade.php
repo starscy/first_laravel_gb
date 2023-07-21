@@ -24,6 +24,8 @@
                 </li>
                 @endif
 
+{{--                @if (Auth::user())--}}
+                @can('logged-in')
                 <li class="nav-item dropdown">
                     <a class="avatar-link nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,9 +33,11 @@
                              class="rounded-circle bg-white avatar-img" alt="Аватар">
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownBlog">
-                        @if(Auth::user() && Auth::user()->admin)
+{{--                        @if(Auth::user() && Auth::user()->admin)--}}
+                        @can('is-admin')
                         <a class="dropdown-item" href="{{route('admin.index')}}">{{__('Admin')}}</a>
-                        @endif
+                        @endcan
+{{--                        @endif--}}
                         <a class="dropdown-item" href="{{route('account.index')}}">{{__('Account')}}</a>
                         <div class="dropdown-divider"></div>
                         <form method="POST" action="{{ route('logout') }}">
@@ -44,6 +48,8 @@
                         </form>
                     </div>
                 </li>
+                @endcan
+{{--                @endif--}}
             </ul>
         </div>
     </div>

@@ -31,7 +31,7 @@ class NewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request)
+    public function index(FilterRequest $request):View
     {
         $data = $request->validated();
 

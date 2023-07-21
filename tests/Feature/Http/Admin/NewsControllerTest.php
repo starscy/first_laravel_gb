@@ -42,4 +42,6 @@ class NewsControllerTest extends TestCase
        $response->assertStatus(200);
        $response->assertJson($postData);
     }
+
+
 }

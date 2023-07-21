@@ -63,6 +63,7 @@
             </div><!-- /.container-fluid -->
         </div>
         <!-- /.content-header -->
+        <x-alerts/>
         @yield('content');
         <!-- /.content-wrapper -->
     </div>

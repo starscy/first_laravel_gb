@@ -8,6 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 
 class AdminPanel
@@ -21,10 +22,15 @@ class AdminPanel
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->admin) {
+//        if (!Auth::user()->admin) {
+//
+//            return redirect()->route('index');
+//        };
 
-            return redirect()->route('index');
-        };
-        return $next($request);
+        if(Gate::allows('is-admin')) {
+            return $next($request);
+        }
+
+        return redirect()->route('index');
     }
 }

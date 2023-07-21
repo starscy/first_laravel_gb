@@ -7,8 +7,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -46,10 +48,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * Check if the user has a role.
+     * @param string $role
+     * @return bool
+     */
+    public function hasAnyRole($role): bool
+    {
+        return null !== $this->roles()->where('name', $role)->first();
+    }
+
+    public function hasAnyRoles($role): bool
+    {
+        return null !== $this->roles()->whereIn('name', $role)->first();
+    }
+
     ////Scopes
 
-    public function scopeAdmin(Builder $query):Collection
+    public function scopeAdmin(Builder $query): Collection
     {
-       return $query->where('admin',1)->get();
+        return $query->where('admin', 1)->get();
     }
 }

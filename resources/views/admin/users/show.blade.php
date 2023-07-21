@@ -32,6 +32,15 @@
                                 </li>
                             </ul>
                             <a href="{{route('admin.users.edit', $user)}}" class="btn btn-primary btn-block"><b>Edit</b></a>
+                            <button type="button" class="btn btn-sm btn-danger"
+                                    onclick="event.preventDefault(); document.getElementById('delete-user-form-{{$user->id}}').submit()">
+                                Delete
+                            </button>
+
+                            <form id="delete-user-form-{{$user->id}}" method="POST" action="{{route('admin.users.destroy', $user->id)}}" style="display:none">
+                                @csrf
+                                @method("DELETE")
+                            </form>
                         </div>
                         <!-- /.card-body -->
                     </div>
