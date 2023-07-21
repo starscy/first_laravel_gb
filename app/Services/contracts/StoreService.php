@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\contracts;
 
 use App\Models\News;
 
-interface Service
+interface StoreService
 {
     public function store($data):bool;
 

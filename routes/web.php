@@ -4,6 +4,7 @@ declare(strict_types=1);
 use App\Helper\UpdateImagesNews;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UsersController as AdminUsersController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\NewsController;
@@ -43,6 +44,8 @@ Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 
-//
+//different
 
 Route::get('/updateImagesNews',[UpdateImagesNews::class, 'index'] );
+
+Route::get('/parce/rambler/games',[ParserController::class, '__invoke']);

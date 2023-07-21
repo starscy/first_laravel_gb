@@ -6,15 +6,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Filters\NewsFilter;
 use App\Http\Requests\News\FilterRequest;
-use App\Services\NewsService;
-use Illuminate\Http\JsonResponse;
 use App\Http\Requests\News\StoreNewsRequest;
 use App\Http\Requests\News\UpdateNewsRequest;
 use App\Models\News;
 use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\SourceQueryBuilder;
+use App\Services\news\NewsService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class NewsController extends Controller

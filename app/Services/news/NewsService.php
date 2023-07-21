@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\news;
 
 use App\Models\News;
+use App\Services\contracts\StoreService;
 
-class NewsService implements Service
+class NewsService implements StoreService
 {
 
     public function store($data): bool

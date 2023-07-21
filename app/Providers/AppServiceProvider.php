@@ -8,6 +8,10 @@ use App\Queries\NewsQueryBuilder;
 use App\Queries\QueryBuilder;
 use App\Queries\SourceQueryBuilder;
 use App\Queries\UserQueryBuilder;
+use App\Services\contracts\Parcer;
+use App\Services\contracts\StoreService;
+use App\Services\news\NewsService;
+use App\Services\parcer\ParcerService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(QueryBuilder::class, NewsQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, SourceQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, UserQueryBuilder::class);
+
+        //Services
+
+        $this->app->bind(Parcer::class, ParcerService::class );
+        $this->app->bind(StoreService::class, NewsService::class);
     }
 
     /**
