@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
 
-Route::group(['middleware' => ['admin.panel', 'auth']], static function () {
+Route::group(['middleware' => ['admin.panel', 'auth', 'verified']], static function () {
     // Admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], static function () {
         Route::get('/', AdminController::class)->name('index');
@@ -26,7 +26,7 @@ Route::group(['middleware' => ['admin.panel', 'auth']], static function () {
     });
 });
 
-Route::group(['middleware' => 'auth'], static function () {
+Route::group(['middleware' => ['auth', 'verified']], static function () {
     Route::resource('/account', AccountController::class);
     });
 
