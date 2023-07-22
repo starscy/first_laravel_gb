@@ -32,7 +32,6 @@ Route::group(['middleware' => ['auth', 'verified']], static function () {
     Route::resource('/account', AccountController::class);
 });
 
-
 // Guest's routes
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/{driver}/auth/', [SocialProviderController::class, 'redirect'])
@@ -41,6 +40,7 @@ Route::group(['middleware' => ['guest']], function () {
     Route::get('/{driver}/callback/', [SocialProviderController::class, 'callback'])
         ->where('driver', '\w+')
         ->name('social-providers.redirect');
+
 });
 
 Route::get('/', [IndexController::class, 'index'])
@@ -50,6 +50,8 @@ Route::get('/news', [NewsController::class, 'index'])
 Route::get('/news/{news}', [NewsController::class, 'show'])
     ->where('news', '\d+')
     ->name('news.show');
+Route::post('/news',[NewsController::class, 'store'])->name('news.store');
+Route::match(['put','patch'],'/news/{news}',[NewsController::class, 'update'])->name('news.update');
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 

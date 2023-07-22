@@ -37,7 +37,7 @@ class NewsController extends Controller
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
 
-        $news = News::filter($filter)->get();
+        $news = News::filter($filter);
 
         return view('admin.news.index', compact('news',));
     }
@@ -56,7 +56,7 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreNewsRequest $request): RedirectResponse
+    public function store(StoreNewsRequest $request):RedirectResponse
     {
         $data = $request->validated();
 

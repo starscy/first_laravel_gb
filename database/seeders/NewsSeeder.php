@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helper\TranslateToSlug;
 use App\Models\News;
 use App\Models\Source;
 use Illuminate\Database\Seeder;
@@ -34,7 +35,7 @@ class NewsSeeder extends Seeder
             $data[] = [
                 'title' => fake()->title(),
                 'author' => fake()->name(),
-                'image' => fake()->title(),
+                'image' => 'assets/dino/images/dinosaurs/' . lcfirst(TranslateToSlug::translit(fake()->title)) .'.jpg',
                 'description' => fake()->text(200),
                 'created_at' => now(),
                 'updated_at' => now(),
