@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SocialProviderController;
 use App\Http\Requests\News\FilterRequest;
+use http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index']);
@@ -50,8 +51,8 @@ Route::get('/news', [NewsController::class, 'index'])
 Route::get('/news/{news}', [NewsController::class, 'show'])
     ->where('news', '\d+')
     ->name('news.show');
-Route::post('/news',[NewsController::class, 'store'])->name('news.store');
-Route::match(['put','patch'],'/news/{news}',[NewsController::class, 'update'])->name('news.update');
+Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+Route::match(['put', 'patch'], '/news/{news}', [NewsController::class, 'update'])->name('news.update');
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
@@ -61,3 +62,15 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::get('/updateImagesNews', [UpdateImagesNews::class, 'index']);
 
 Route::get('/parce/rambler/games', [ParserController::class, '__invoke']);
+
+//Route::group(['middleware' => ['auth:sanctum']], function () {
+//    Route::post('/tokens/create', function () {
+//
+//        return ['token' =>12];
+//    });
+//
+//
+//});
+Route::get('/api', function (){
+    return view('api');
+});

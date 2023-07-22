@@ -8,7 +8,6 @@ use App\Services\contracts\StoreService;
 
 class NewsService implements StoreService
 {
-
     public function store($data): News|false
     {
         $categories = $this->getCategory($data);

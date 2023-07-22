@@ -67,6 +67,7 @@ class FortifyServiceProvider extends ServiceProvider
             if ($user &&
                 Hash::check($request->password, $user->password)) {
 
+
                 ///events
                 event(new LoginEvent($user));
 
