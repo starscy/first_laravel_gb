@@ -37,7 +37,7 @@ class NewsController extends Controller
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
 
-        $news = News::filter($filter);
+        $news = News::filter($filter)->get();
 
         return view('admin.news.index', compact('news',));
     }

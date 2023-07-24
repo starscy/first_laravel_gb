@@ -1,16 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources\News;
 
+use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\Source\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class NewsResource extends JsonResource
 {
-    public function toArray($request)
+    public function toArray($request): array
     {
-        $source = Source::find($this->source_id);
-
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -18,10 +20,8 @@ class NewsResource extends JsonResource
             'image' => $this->image,
             'description' => $this->description,
             'created_at' => $this->created_at,
-            'source' => [
-                'id' => $source->id ?? '',
-                'title' => $source->title ?? '',
-                ],
+            'source' => new SourceResource($this->source),
+            'categories' => CategoryResource::collection($this->categories)
         ];
     }
 }

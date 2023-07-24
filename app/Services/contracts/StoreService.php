@@ -7,7 +7,7 @@ use App\Models\News;
 
 interface StoreService
 {
-    public function store($data): News|false;
+    public function store(array $data): News|string;
 
-    public function update(News $news, $data): News|false;
+    public function update(News $news, array $data): News|string;
 }

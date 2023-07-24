@@ -7,10 +7,7 @@
 
         function getCookie(name) {
             const value = `; ${document.cookie}`;
-            console.log('value', value);
             const parts = value.split(`; ${name}=`);
-            console.log('parts', parts);
-            console.log('patts.length', parts.length)
             if (parts.length === 2) {
 
                 return parts.pop().split(';').shift();
@@ -18,21 +15,30 @@
             return parts.split(';').shift();
         }
 
-        function login() {
-
+        function request(url, options){
             //get cookie
             const csrfToken = getCookie('XSRF-TOKEN');
-            console.log('csrfToken', csrfToken);
-            console.log('csrfToken', decodeURIComponent(csrfToken));
 
-
-            return fetch('/login', {
+            return fetch(url, {
                 headers: {
                     'content-type': 'application/json',
                     'accept': 'application/json',
                     'X-XSRF-TOKEN': decodeURIComponent(csrfToken)
                 },
                 credentials: 'include',
+                ...options
+            })
+
+        }
+
+        function logout(){
+            return request('/logout', {
+                method: 'POST'
+            })
+        }
+
+        function login() {
+            return request('/login', {
                 method: 'POST',
                 body: JSON.stringify({
                     'email': 'starscy@rambler.ru',
@@ -47,7 +53,11 @@
                 'accept': 'application/json'
             },
             credentials: 'include',
-        }).then(() => {
+        })
+            .then(()=> {
+                return logout();
+            })
+            .then(() => {
             return login();
         })
 

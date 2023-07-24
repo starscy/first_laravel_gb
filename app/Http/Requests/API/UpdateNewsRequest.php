@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\News;
+namespace App\Http\Requests\API;
 
+use App\Models\Source;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNewsRequest extends FormRequest
+class UpdateNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,24 +27,16 @@ class StoreNewsRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:2', 'max:200'],
+            'author' => 'nullable',
             'description' => ['nullable', 'string', 'min:2'],
             'image' => ['sometimes'],
             'source_id' => ['nullable'],
-            'categories' => 'nullable|array',
-            'categories.*' => 'nullable'
+            'categories' => '',
         ];
     }
 
     public function getCategories(): array|null
     {
         return $this->validated('categories');
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'title' => 'заголовок',
-            'author' => 'автор'
-        ];
     }
 }
