@@ -108,7 +108,6 @@ class NewsService implements StoreService
         $categoriesIds = [];
 
         foreach ($categories as $category) {
-
             $tag = '';
             if (gettype($category) === 'string') {
                 $currentCategory = Category::find($category);
