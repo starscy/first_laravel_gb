@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateUserRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -16,15 +18,13 @@ class UpdateUserRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:2', 'max:200'] ,
-            'email' => ['string', ],
-            'admin' => '',
-            'password' =>'',
-
+            'name' => ['required', 'string', 'min:2', 'max:200'],
+            'login' => '',
+            'email' => ['string', 'required'],
+            'roles' => 'array'
         ];
     }
-
 }

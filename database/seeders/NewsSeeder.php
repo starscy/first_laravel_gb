@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Helper\TranslateToSlug;
+use App\Models\News;
+use App\Models\Source;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class NewsSeeder extends Seeder
 {
@@ -14,7 +17,15 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('news')->insert($this->getData());
+        DB::table('news')->insert($this->getData());
+
+//        $sources = Source::all();
+//
+//        News::all()->each(function ($news) use ($sources) {
+//            $news->source()->attach(
+//                $sources->random(1)->pluck('id')
+//            );
+//        });
     }
 
     public function getData()
@@ -24,11 +35,11 @@ class NewsSeeder extends Seeder
             $data[] = [
                 'title' => fake()->title(),
                 'author' => fake()->name(),
-                'image' => fake()->title(),
+                'image' => 'assets/dino/images/dinosaurs/' . lcfirst(TranslateToSlug::translit(fake()->title)) .'.jpg',
                 'description' => fake()->text(200),
                 'created_at' => now(),
                 'updated_at' => now(),
-                'source_id' => null
+                'source_id' => null,
             ];
         }
 

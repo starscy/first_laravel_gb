@@ -4,17 +4,28 @@
     "News has been updated" : "Новость была обновлена",
     "News has not been updated" : "Новость не была обновлена",
 
-    "Register" : "Зарегистрироваться",
-    "Auth" : "Авторизоваться",
+    "Registration" : "Зарегистрироваться",
+    "Register" : "Зарегистрируйтесь",
+    "Auth" : "Авторизация",
     "Exit" : "Выйти",
     "Admin" : "Админка",
     "Enter" : "Войти",
     "Submit" : "Принять",
+    "New password" :"Новый пароль",
+    "Create" : "Создать",
+    "Are you registered ?" : "Уже зарегистрированы? ",
+    "Wrong email or password" : " Неверный логин или пароль.",
+    "Forget password?": "Забыли пароль?",
+    "First time?": "Впервые на сайте? ",
+    "Reset password" : "Восстановление пароля",
+    "Drop password": "Сбросить пароль",
 
+    "Create user" : "Создать пользователя",
 
     "News" : "Динозавры",
     "Order" : "Приют динозавриков",
     "Account" : "Личный кабинет",
 
     "Add admin rights" : "Добавить права администратора"
+
 }

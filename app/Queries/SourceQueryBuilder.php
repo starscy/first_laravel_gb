@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queries;
 
 use App\Models\Source;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SourceQueryBuilder extends QueryBuilder
 {
@@ -15,8 +14,8 @@ class SourceQueryBuilder extends QueryBuilder
         return Source::query();
     }
 
-    public function getAll():Collection
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->getModel()->get();
+        return $this->getModel()->paginate(QueryBuilder::TWENTY);
     }
 }

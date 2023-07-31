@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests\News;
 
@@ -11,7 +12,7 @@ class StoreNewsRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,23 +22,24 @@ class StoreNewsRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'min:2', 'max:200'] ,
+            'title' => ['required', 'string', 'min:2', 'max:200'],
             'description' => ['nullable', 'string', 'min:2'],
-            'image'=> ['sometimes'],
-            'source_id' =>'',
-            'categories' => ''
+            'image' => ['sometimes'],
+            'source_id' => ['nullable'],
+            'categories' => 'nullable|array',
+            'categories.*' => 'nullable'
         ];
     }
 
-    public function getCategories():array | null
+    public function getCategories(): array|null
     {
         return $this->validated('categories');
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'title' => 'заголовок',

@@ -16,24 +16,24 @@ class NewsQueryBuilder extends QueryBuilder
         return News::query();
     }
 
-    public function getAll():LengthAwarePaginator
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->getModel()->paginate(3);
+        return $this->getModel()->paginate(10);
     }
 
-    public function getActiveNews()
+    public function getActiveNews() : LengthAwarePaginator
     {
-        return $this->getModel()->active()->get();
+        return $this->getModel()->active();
     }
 
-    public function getTitleFilter($title)
+    public function getTitleFilter($title): LengthAwarePaginator
     {
-        return $this->getModel()->where('title', 'like', "%${title}%");
+        return $this->getModel()->where('title', 'like', "%{$title}%")->paginate(QueryBuilder::TEN);
     }
 
-    public function getSourceFilter($id)
+    public function getSourceFilter($id): LengthAwarePaginator
     {
-        return $this->getModel()->where('source_id', '=', $id)->get();
+        return $this->getModel()->where('source_id', '=', $id)->paginate(QueryBuilder::TEN);
     }
 
 

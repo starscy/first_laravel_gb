@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queries;
 
-use App\Models\News;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,9 +15,8 @@ class UserQueryBuilder extends QueryBuilder
         return User::query();
     }
 
-    public function getAll():LengthAwarePaginator
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->getModel()->paginate(3);
+        return $this->getModel()->paginate(QueryBuilder::TWENTY);
     }
-
 }

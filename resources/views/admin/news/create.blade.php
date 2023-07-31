@@ -3,7 +3,6 @@
 
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Добавление новости</h1>
-
         <form name="sentMessage" id="contactForm" action="{{route('admin.news.store')}}" method="post" enctype="multipart/form-data" >
             @csrf
             <div class="control-group form-group">

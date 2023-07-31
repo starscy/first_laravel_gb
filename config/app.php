@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use SocialiteProviders\Manager\ServiceProvider;
 
 return [
 
@@ -182,6 +183,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        ServiceProvider::class,
+
 
         /*
          * Package Service Providers...

@@ -18,8 +18,6 @@
                     <code class="red">{{ $message }}</code>
                     @enderror
                 </div>
-
-
             </div>
             <div class="control-group form-group">
                 <div class="controls">
@@ -43,25 +41,33 @@
             <div class="control-group form-group">
                 <div class="controls">
                     <label for="source">Выберите тип </label>
-                    <select class="form-control" id="source" name="source_id">
-                        @foreach($sources as $arItem)
-                            <option
-                                {{$arItem->id === $news->source->id ? 'selected' : ''}}  value="{{$arItem->id}}">{{$arItem->title}}</option>
-                        @endforeach
-                    </select>
+                    @if(!empty($sources) )
+
+                        <select class="form-control" id="source" name="source_id">
+                            @foreach($sources as $arItem)
+                                <option
+                                    {{$arItem->id === ($news->source->id ?? '') ? 'selected' : ''}}
+                                    value="{{$arItem->id}}">
+                                    {{$arItem->title}}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
             </div>
             <div class="control-group form-group">
                 <div class="controls">
                     <label for="categories">Выберите тип </label>
                     <select multiple class="form-control" id="categories" name="categories[]">
-                        @foreach($categories as $category)
-                            <option
-                                @foreach($news->categories as $tag)
-                                    {{$category->id === $tag->id ? 'selected' : ''}}
-                                @endforeach
-                                value="{{$category->id}}">{{$category->title}}</option>
-                        @endforeach
+                        @if(!empty($categories))
+                            @foreach($categories as $category)
+                                <option
+                                    @foreach($news->categories as $tag)
+                                        {{$category->id === $tag->id ? 'selected' : ''}}
+                                    @endforeach
+                                    value="{{$category->id}}">{{$category->title}}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
             </div>

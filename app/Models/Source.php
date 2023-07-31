@@ -1,12 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Source extends Model
 {
@@ -14,9 +13,12 @@ class Source extends Model
 
     protected $table = 'sources';
 
-    protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'description'
+    ];
 
-    public function news()
+    public function news(): HasMany
     {
         return $this->hasMany(News::class, 'source_id', 'id');
     }
