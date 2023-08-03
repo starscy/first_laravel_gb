@@ -12,6 +12,7 @@ use App\Models\News;
 use App\Queries\CategoryQueryBuilder;
 use App\Queries\NewsQueryBuilder;
 use App\Queries\SourceQueryBuilder;
+use App\Services\contracts\Upload;
 use App\Services\news\NewsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -23,13 +24,15 @@ class NewsController extends Controller
         protected CategoryQueryBuilder $categoryQueryBuilder,
         protected NewsQueryBuilder     $newsQueryBuilder,
         protected SourceQueryBuilder   $sourceQueryBuilder,
-        protected NewsService          $service
+        protected NewsService          $service,
+        protected Upload $upload
     )
     {
     }
 
     public function index(FilterRequest $request):View
     {
+
         $data = $request->validated();
 
         $filter = app()->make(NewsFilter::class, ['queryParams' => array_filter($data)]);
@@ -50,6 +53,10 @@ class NewsController extends Controller
     public function store(StoreNewsRequest $request):RedirectResponse
     {
         $data = $request->validated();
+
+        if($request->hasFile('image')) {
+           $data['images'] = $this->upload->create($request->file('image'));
+        }
 
         return $this->service->store($data) ?
             redirect()->route('admin.news.index')->with('success', trans('News has been created')) :
@@ -77,6 +84,10 @@ class NewsController extends Controller
     public function update(UpdateNewsRequest $request, News $news): RedirectResponse
     {
         $data = $request->validated();
+
+        if($request->hasFile('image')) {
+            $data['images'] = $this->upload->create($request->file('image'));
+        }
 
         return $this->service->update($news, $data) ?
             redirect()->route('admin.news.index')->with('success', trans('News has been updated')) :

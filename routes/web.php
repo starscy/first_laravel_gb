@@ -61,16 +61,6 @@ Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 Route::get('/updateImagesNews', [UpdateImagesNews::class, 'index']);
 
-Route::get('/parce/rambler/games', [ParserController::class, '__invoke']);
+Route::get('/parcer', [ParserController::class, '__invoke']);
 
-//Route::group(['middleware' => ['auth:sanctum']], function () {
-//    Route::post('/tokens/create', function () {
-//
-//        return ['token' =>12];
-//    });
-//
-//
-//});
-Route::get('/api', function (){
-    return view('api');
-});
+

@@ -26,8 +26,8 @@ class StoreNewsRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:2', 'max:200'],
-            'description' => ['nullable', 'string', 'min:2'],
-            'image' => ['sometimes'],
+            'description' => ['nullable'],
+            'image' => ['sometimes', 'image', 'mimes:jpg,png,bmp'],
             'source_id' => ['nullable'],
             'categories' => 'nullable|array',
             'categories.*' => 'nullable'

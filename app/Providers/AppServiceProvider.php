@@ -11,9 +11,11 @@ use App\Queries\UserQueryBuilder;
 use App\Services\contracts\Parcer;
 use App\Services\contracts\Social;
 use App\Services\contracts\StoreService;
+use App\Services\contracts\Upload;
 use App\Services\news\NewsService;
 use App\Services\parcer\ParcerService;
 use App\Services\social\SocialService;
+use App\Services\UploadService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Parcer::class, ParcerService::class );
         $this->app->bind(StoreService::class, NewsService::class);
         $this->app->bind(Social::class, SocialService::class);
+        $this->app->bind(Upload::class, UploadService::class);
 
 
     }

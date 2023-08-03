@@ -111,8 +111,9 @@ class NewsService implements StoreService
             $tag = '';
             if (gettype($category) === 'string') {
                 $currentCategory = Category::find($category);
-                $currentCategory->update($category);
                 $tag = $currentCategory->fresh();
+                $categoriesIds[] = $tag->id;
+                continue;
             }
             if (!isset($category['id'])) {
                 $tag = Category::create($category);

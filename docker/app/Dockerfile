@@ -22,4 +22,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin \
 
-WORKDIR "/application"
+RUN chown -R www-data:www-data /var/www
+
+WORKDIR /var/www
