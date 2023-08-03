@@ -5,18 +5,20 @@ namespace App\Services\parcer;
 
 use App\Models\News;
 use App\Services\contracts\Parcer;
+use Illuminate\Support\Facades\Storage;
 
 class ParcerService implements Parcer
 {
     private string $link;
-    public function setLink(string $link):self
+
+    public function setLink(string $link): self
     {
         $this->link = $link;
 
         return $this;
     }
 
-    public function saveParseData():void
+    public function saveParseData(): void
     {
         $xml = \Orchestra\Parser\Xml\Facade::load($this->link);
 
@@ -33,10 +35,15 @@ class ParcerService implements Parcer
             'image' => [
                 'uses' => 'channel.image.url'],
             'news' => [
-                'uses' => 'channel.item[title,pubDate,description,pdalink,author]'
+                'uses' => 'channel.item[title,pubDate,description,link,author]'
             ],
         ]);
+        dump($data);
 
-        //do later
+        $explode = explode('/', $this->link);
+        $fileName = end($explode);
+
+        Storage::append('parser/' . $fileName . '.txt', json_encode($data));
+
     }
 }

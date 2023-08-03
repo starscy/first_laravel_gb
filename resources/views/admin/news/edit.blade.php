@@ -21,6 +21,7 @@
             </div>
             <div class="control-group form-group">
                 <div class="controls">
+{{--                    <img src="{{Storage::disk('public')->url($news->image)}}"/>--}}
                     <label for="image">Изображение</label>
                     <input type="file" class="form-control" id="image" name="image">
                 </div>
@@ -32,7 +33,7 @@
                 <div class="controls">
                     <label for="description">Описание</label>
                     <textarea rows="10" cols="100" class="form-control" id="description" name="description" required
-                              style="resize:none">{{$news->description}}}</textarea>
+                              style="resize:none">{{$news->description}}</textarea>
                 </div>
                 @error('description')
                 <code class="red">{{ $message }}</code>
@@ -42,7 +43,6 @@
                 <div class="controls">
                     <label for="source">Выберите тип </label>
                     @if(!empty($sources) )
-
                         <select class="form-control" id="source" name="source_id">
                             @foreach($sources as $arItem)
                                 <option
@@ -77,3 +77,12 @@
     </div>
 
 @endsection
+@push('js')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush
